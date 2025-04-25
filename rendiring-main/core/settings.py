@@ -9,26 +9,28 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see     
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+# Load environment variables from .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+# Access environment variables
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+MONGO_URI = os.getenv("MONGO_URI")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split()
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,8 +43,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
 ]
-CRISPY_TEMPLATE_PACK = ["bootstrap4"]
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,10 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 # Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -85,10 +84,7 @@ DATABASES = {
     }
 }
 
-
 # Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -104,42 +100,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
 # Tables
-# https://django-tables2.readthedocs.io/en/latest/index.html
-
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap4.html'
 
-
 # Forms
-# https://django-crispy-forms.readthedocs.io/en/latest/index.html
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
-
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
